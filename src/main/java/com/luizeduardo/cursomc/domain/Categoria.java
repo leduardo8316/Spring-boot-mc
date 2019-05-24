@@ -2,6 +2,7 @@ package com.luizeduardo.cursomc.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,8 +13,12 @@ public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	/*@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_categoria_sequence")
+	@SequenceGenerator(name = "id_categoria_sequence", sequenceName = "id_categoria_sequence")*/
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column(name="idcategoria")
 	private Integer id;
+	@Column(name="nomecategoria")
 	private String nome;
 
 	public Categoria() {

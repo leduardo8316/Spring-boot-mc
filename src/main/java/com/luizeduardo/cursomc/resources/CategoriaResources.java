@@ -1,28 +1,26 @@
 package com.luizeduardo.cursomc.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.luizeduardo.cursomc.domain.Categoria;
+import com.luizeduardo.cursomc.services.CategoriaService;
 
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResources {
 
-	@RequestMapping(method = RequestMethod.GET)
-	public List<Categoria> teste() {
-		Categoria cat1 = new Categoria(1, "Informática");
-		Categoria cat2 = new Categoria(2, "Diversos");
+	@Autowired
+	private CategoriaService categoriaService;
 
-		List<Categoria> list = new ArrayList<Categoria>();
-		list.add(cat1);
-		list.add(cat2);
-
-		return list;
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> findbyId(@PathVariable Integer id) {
+		Categoria ojb = categoriaService.buscar(id);
+		return ResponseEntity.ok().body(ojb);
 	}
 
 }
