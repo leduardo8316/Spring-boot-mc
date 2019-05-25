@@ -16,10 +16,15 @@ public class CategoriaResources {
 
 	@Autowired
 	private CategoriaService categoriaService;
+	
+	@RequestMapping(value="/{salvarcategoria}", method = RequestMethod.POST)
+	public void SalveAll(@PathVariable Categoria salvarcategoria) {
+		categoriaService.salvar(salvarcategoria);
+	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> findbyId(@PathVariable Integer id) {
-		Categoria ojb = categoriaService.buscar(id);
+	@RequestMapping(value = "/{idcategoria}", method = RequestMethod.GET)
+	public ResponseEntity<?> findbyId(@PathVariable Integer idcategoria) {
+		Categoria ojb = categoriaService.buscar(idcategoria);
 		return ResponseEntity.ok().body(ojb);
 	}
 

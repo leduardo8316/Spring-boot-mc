@@ -1,25 +1,43 @@
 package com.luizeduardo.cursomc.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	/*
+	 * @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+	 * "id_categoria_sequence")
+	 * 
+	 * @SequenceGenerator(name = "id_categoria_sequence", sequenceName =
+	 * "id_categoria_sequence")
+	 */
 	@Id
-	/*@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_categoria_sequence")
-	@SequenceGenerator(name = "id_categoria_sequence", sequenceName = "id_categoria_sequence")*/
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@Column(name="idcategoria")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name="nomecategoria")
+	@Column(name = "nomecategoria")
 	private String nome;
+
+	/*
+	 * mappedBy= pega a referência do 1 mapeamento feito em Produtos, que foi feito
+	 * na lista categorias
+	 */
+	@JsonManagedReference
+	@ManyToMany(mappedBy = "categorias")
+	private List<Produto> produtos = new ArrayList<>();
 
 	public Categoria() {
 	}
@@ -44,6 +62,14 @@ public class Categoria implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
 
 	@Override
